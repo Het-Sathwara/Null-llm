@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Training artifacts
+Project/logs/
+Project/models/
+Project/plots/
+Project/data/raw/
+Project/data/processed/
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+.DS_Store
+*.log 
