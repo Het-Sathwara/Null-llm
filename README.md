@@ -113,11 +113,3 @@ st.plotly_chart(plot_indicators(data))
 auto_trade = st.sidebar.checkbox("Enable Auto-Trading")
 update_interval = st.sidebar.number_input("Update Interval (seconds)", 1, 60, 5)
 ```
-
-## Contributing
-
-Feel free to submit issues, fork the repository, and create pull requests for any improvements.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
