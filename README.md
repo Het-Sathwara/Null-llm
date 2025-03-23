@@ -58,55 +58,6 @@ python Project/src/train.py
 streamlit run Project/src/evaluation_dashboard.py
 ```
 
-## Dashboard Features
-
-The Streamlit dashboard provides real-time monitoring and analysis:
-
-```python
-# Example dashboard code
-import streamlit as st
-import pandas as pd
-import plotly.graph_objects as go
-
-# Configure page
-st.set_page_config(
-    page_title="Trading Bot Dashboard",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Sidebar controls
-st.sidebar.title("Trading Controls")
-ticker = st.sidebar.selectbox("Select Asset", ["AAPL", "GOOGL", "MSFT"])
-initial_balance = st.sidebar.number_input("Initial Balance", 10000, 1000000, 100000)
-risk_level = st.sidebar.slider("Risk Level", 0.0, 1.0, 0.5)
-
-# Main dashboard
-st.title("Trading Bot Performance")
-
-# Key metrics
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("Portfolio Value", "$120,500", "+20.5%")
-col2.metric("Current Position", "2.5 AAPL", "+0.5")
-col3.metric("Last Trade", "BUY @ $150.25", "")
-col4.metric("P&L", "+$2,500", "+2.5%")
-
-# Candlestick chart
-st.subheader("Price Chart")
-# Add your plotly candlestick chart here
-
-# Trade history
-st.subheader("Trade History")
-trade_history = pd.DataFrame({
-    "Timestamp": ["2024-03-23 10:30:00", "2024-03-23 11:15:00"],
-    "Action": ["BUY", "SELL"],
-    "Price": [150.25, 152.50],
-    "Quantity": [10, 10],
-    "P&L": [0, 225]
-})
-st.dataframe(trade_history)
-```
-
 ## Training Parameters
 
 - Episodes: 100
