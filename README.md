@@ -13,7 +13,7 @@ Project/
 │   ├── model.py         # DQN agent implementation
 │   ├── trading_env.py   # Custom trading environment
 │   └── train.py         # Training script
-├── data_preprocessing.py # Data preparation script
+|   ├── data_preprocessing.py # Data preparation script
 └── requirements.txt     # Project dependencies
 ```
 
@@ -29,8 +29,8 @@ Project/
 
 1. Clone the repository:
 ```bash
-git clone [your-repo-url]
-cd [repo-name]
+git clone https://github.com/Het-Sathwara/Null-llm
+cd Null-llm
 ```
 
 2. Install dependencies:
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 1. Prepare the data:
 ```bash
-python Project/data_preprocessing.py
+python Project/src/data_preprocessing.py
 ```
 
 2. Train the model:
