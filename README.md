@@ -1,115 +1,116 @@
-# Deep Q-Learning Trading Bot
+# NULL-v1: Trading AI with Deep Reinforcement Learning
 
-A Deep Q-Network (DQN) based trading bot that learns to trade AAPL stock using reinforcement learning.
+NULL-v1 is an advanced trading system that leverages Deep Q-Network (DQN) reinforcement learning to develop profitable trading strategies for financial markets.
+
+## Project Overview
+
+This project implements a sophisticated trading agent that learns optimal trading strategies through interaction with a custom trading environment. The system uses a Deep Q-Network architecture with experience replay to learn complex patterns in market data.
+
+## Key Features
+
+- **Deep Reinforcement Learning**: Uses a DQN architecture to make trading decisions
+- **Custom Trading Environment**: Simulates realistic market conditions with transaction costs
+- **Interactive Dashboard**: Visualize performance metrics and trading decisions
+- **Risk Management**: Implements stop-loss, position sizing, and portfolio balancing
+- **Technical Indicators**: Leverages common financial indicators (SMA, RSI, MACD, etc.)
+- **Performance Analytics**: Calculates Sharpe ratio, drawdown, returns, and other metrics
 
 ## Project Structure
 
 ```
-Project/
-├── data/
-│   ├── raw/             # Raw stock data with indicators
-│   └── processed/       # Normalized training/testing data
-├── src/
-│   ├── model.py         # DQN agent implementation
-│   ├── trading_env.py   # Custom trading environment
-│   ├── train.py         # Training script
-│   ├── evaluate.py      # Evaluation metrics and visualization
-│   ├── data_preprocessing.py # Data preparation script
-│   └── evaluation_dashboard.py # Streamlit dashboard
-└── requirements.txt     # Project dependencies
+Null-llm/
+├── Project/
+│   ├── data/
+│   │   ├── raw/             # Raw market data
+│   │   └── processed/       # Preprocessed and normalized data
+│   ├── models/              # Saved model weights and hyperparameters
+│   ├── src/
+│   │   ├── model.py         # DQN agent implementation
+│   │   ├── trading_env.py   # Custom trading environment
+│   │   ├── train.py         # Training script
+│   │   ├── evaluate.py      # Evaluation tools
+│   │   ├── data_preprocessing.py # Data preparation utilities
+│   │   └── evaluation_dashboard.py # Streamlit dashboard
+│   └── dashboard.py         # Simplified dashboard launcher
+└── requirements.txt         # Project dependencies
 ```
-
-## Features
-
-- Custom OpenAI Gym trading environment
-- Deep Q-Network with experience replay and target network
-- Risk management with stop-loss and take-profit
-- Position sizing based on volatility
-- Technical indicators (SMA, RSI, MACD, Bollinger Bands)
-- Interactive Streamlit dashboard for performance monitoring
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
 ```bash
-git clone https://github.com/Het-Sathwara/Null-llm
+git clone https://github.com/Het-Sathwara/Null-llm.git
 cd Null-llm
 ```
 
-2. Install dependencies:
+2. **Install dependencies**:
 ```bash
 pip install -r requirements.txt
 ```
 
+3. **Environment setup**:
+Make sure you have Python 3.8+ and TensorFlow 2.4+ installed.
+
 ## Usage
 
-1. Prepare the data:
-```bash
-python Project/src/data_preprocessing.py
-```
+### Training the Model
 
-2. Train the model:
+Run the training script to train a new model:
+
 ```bash
 python Project/src/train.py
 ```
 
-3. Launch the evaluation dashboard:
+You can configure training parameters by editing the training script or providing command-line arguments.
+
+### Evaluating Performance
+
+Evaluate the trained model on test data:
+
+```bash
+python Project/src/evaluate.py
+```
+
+### Running the Dashboard
+
+Start the interactive dashboard to visualize results:
+
+```bash
+python Project/dashboard.py
+```
+
+Or use the more detailed evaluation dashboard:
+
 ```bash
 streamlit run Project/src/evaluation_dashboard.py
 ```
 
-## Training Parameters
-
-- Episodes: 100
-- Initial Balance: $100,000
-- Batch Size: 32
-- Buffer Size: 50,000
-- Learning Rate: 0.0001
-- Gamma (Discount Factor): 0.95
-- Epsilon Decay: 0.99
-
-## Risk Management
-
-- Maximum Position Size: 20% of balance
-- Maximum Leverage: 2x
-- Stop Loss: 2%
-- Take Profit: 4%
-- Transaction Cost: 0.1%
-
 ## Model Architecture
 
-- Input: 151 features (15 indicators × 10 time steps + position)
-- Hidden Layer 1: 128 units with BatchNorm and LeakyReLU
-- Hidden Layer 2: 64 units with BatchNorm and LeakyReLU
-- Output: 3 units (Long, Short, Hold)
+- **State Space**: Market data features including price, volume, and technical indicators
+- **Action Space**: Three possible actions (Long, Short, Hold)
+- **Neural Network**: 
+  - Input Layer: State size (varies based on features)
+  - Hidden Layer 1: 128 neurons with BatchNorm and LeakyReLU
+  - Hidden Layer 2: 64 neurons with BatchNorm and LeakyReLU
+  - Output Layer: Action size (3)
+- **Experience Replay**: Buffer size of 10,000 with prioritized sampling
+- **Training Algorithm**: Double DQN with target network updates
 
-## Dashboard Customization
+## Performance Metrics
 
-You can customize the dashboard by modifying `evaluation_dashboard.py`:
+The model is evaluated using the following metrics:
+- Sharpe Ratio (risk-adjusted return)
+- Maximum Drawdown
+- Annualized Return
+- Total Return
+- Win Rate
+- Trade Distribution
 
-1. Update metrics:
-```python
-# Add custom metrics
-st.sidebar.markdown("### Performance Metrics")
-st.sidebar.metric("Sharpe Ratio", "1.85", "+0.15")
-st.sidebar.metric("Max Drawdown", "-12.5%", "")
-```
+## Customization
 
-2. Add technical indicators:
-```python
-# Plot technical indicators
-def plot_indicators(data):
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=data.index, y=data['SMA_20'], name='SMA 20'))
-    fig.add_trace(go.Scatter(x=data.index, y=data['RSI'], name='RSI'))
-    return fig
-
-st.plotly_chart(plot_indicators(data))
-```
-
-3. Configure auto-trading:
-```python
-# Auto-trading settings
-auto_trade = st.sidebar.checkbox("Enable Auto-Trading")
-update_interval = st.sidebar.number_input("Update Interval (seconds)", 1, 60, 5)
-```
+You can customize the trading agent by modifying:
+- The features used in the state representation
+- The neural network architecture
+- The reward function
+- Risk management parameters

@@ -1,10 +1,11 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from .trading_env import TradingEnv
-from .model import TDQNAgent
+from trading_env import TradingEnv
+from model import TDQNAgent
 import os
 from io import BytesIO
+import sys
 
 def evaluate_model(agent, test_data, initial_balance=100000):
     """
@@ -110,21 +111,33 @@ def visualize_performance(results_df, metrics, save_path=None, return_image=Fals
     return None
 
 if __name__ == "__main__":
+    # Get the project directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.dirname(current_dir)
+    
     # Load trained model
     agent = TDQNAgent(state_size=15, action_size=3)  # Match training config
-    agent.load("../models/best_model.weights.h5")
+    agent.load(os.path.join(project_dir, "models/best_model.weights.h5"))
     
     # Load test data
-    test_data = pd.read_csv("../data/processed/test_scaled.csv", index_col='Date', parse_dates=True)
+    test_data_path = os.path.join(project_dir, "data/processed/test_scaled.csv")
+    if not os.path.exists(test_data_path):
+        print(f"Error: Test data not found at {test_data_path}")
+        sys.exit(1)
+        
+    test_data = pd.read_csv(test_data_path, index_col='Date', parse_dates=True)
     
     # Evaluate
     results_df, metrics = evaluate_model(agent, test_data)
     
     # Visualize
+    plot_path = os.path.join(project_dir, "plots")
+    os.makedirs(plot_path, exist_ok=True)
+    
     visualize_performance(
         results_df, 
         metrics,
-        save_path="../plots/test_performance.png"
+        save_path=os.path.join(plot_path, "test_performance.png")
     )
     
     print("\nPerformance Metrics:")
